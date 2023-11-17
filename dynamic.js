@@ -7,14 +7,24 @@ context.fillRect(0, 0, canvas.width, canvas.height);
 var wx = 320, wy = 320;
 var yFloor = 400, yCeil = -yFloor;
 var zsc = 600;
-var center = [300, 200, 1200];
+var center = [300, 0, 1200];
 var r = 400;
 
 var xsc, ysc;
 var zeros = [0, 0, 0];
 var Vsee = zeros.slice(), Esee = zeros.slice(), Vdsee = zeros.slice();
 
-render();
+
+// draw();
+function draw() {
+    // requestAnimationFrame(draw);
+    setTimeout(draw, 1000/30);
+    // center[2] += 10;
+    if (center[2] > 4000) center[2] = 1000;
+    render();
+}
+render()
+
 function render() {
     var image = context.getImageData(0, 0, 640, 640);
     var pixels = image.data;
@@ -22,7 +32,9 @@ function render() {
         ysc = i - wy;
         xsc = j - wx;
         Vsee = [xsc, ysc, zsc];
-        var norm = Math.sqrt(dot(Vsee, Vsee));
+        var norm = 0.0;
+        // for (var k=0; k<3; ++k) norm += Vsee[k] * Vsee[k];
+        norm = Math.sqrt(dot(Vsee, Vsee));
         for (var k=0; k<3; ++k) Esee[k] = Vsee[k] / norm;
         var c1 = dot(Esee, center);
         var c2 = dot(center, center) - r*r;
@@ -35,31 +47,51 @@ function render() {
             if (t > 0) setColor(pixels, wx, i, j, ceilColor(t * Esee[0], t * Esee[2]));
         } else {
             //球で反射
-            var isFloor = false, isCeil = false;
             var t = c1 - Math.sqrt(c1 * c1 - c2);
             var n = zeros;
             for (var k=0; k<3; ++k) n[k] = t * Esee[k] - center[k];
-            norm = Math.sqrt(dot(n, n));
+            norm = dot(n, n);
+            norm = Math.sqrt(norm);
+            // console.log(norm);
             for (var k=0; k<3; ++k) n[k] /= norm;
+            // for (var k=0; k<3; ++k) n[k] *= -1;
+            if (xsc == 100 && ysc == 100) {
+                console.log("test");
+                console.log(dot(Esee, n));
+            }
         
             var coef = -2 * dot(Esee, n);
             for (var k=0; k<3; ++k) Vdsee[k] = Esee[k] + coef * n[k];
+            if (xsc == 100 && ysc == 100) {
+                console.log("test");
+                console.log(Vdsee);
+            }
 
             var s = (yFloor-t*Esee[1]) / Vdsee[1];
-            if (s > 0) setColor(pixels, wx, i, j, floorColor(t*Esee[0] + s*Vdsee[0], t*Esee[2] + s*Vdsee[2], true));
-            else if (s*Vdsee[1] < 0) isFloor = true;
-            // else if (!done)setColor(pixels, wx, i, j, floorColor(yFloor / Esee[1] * Esee[0], yFloor / Esee[1] * Esee[2]));
-            
+            if (s > 0) setColor(pixels, wx, i, j, floorColor(t*Esee[0] + s*Vdsee[0], t*Esee[2] + s*Vdsee[2]));
             s = (yCeil-t*Esee[1]) / Vdsee[1];
-            if (s > 0) setColor(pixels, wx, i, j, ceilColor(t*Esee[0] + s*Vdsee[0], t*Esee[2] + s*Vdsee[2], true));
-            else if (s*Vdsee[1] > 0) isCeil = true;
-            // else if (!done) setColor(pixels, wx, i, j, ceilColor(yCeil/Esee[1]*Esee[0], yCeil/Esee[1] * Esee[2]));
-            if (isFloor) setColor(pixels, wx, i, j, floorColor(yFloor / Esee[1] * Esee[0], yFloor / Esee[1] * Esee[2]));
-            if (isCeil) setColor(pixels, wx, i, j, ceilColor(yCeil/Esee[1]*Esee[0], yCeil/Esee[1] * Esee[2]));
+            if (s > 0) setColor(pixels, wx, i, j, ceilColor(t*Esee[0] + s*Vdsee[0], t*Esee[2] + s*Vdsee[2]));
+            if (xsc == 100 && ysc == 100) {
+
+                console.log("out put");
+                console.log(c1);
+                console.log(c2);
+                console.log(t);
+                console.log(n);
+            }
         }
     }
     context.putImageData(image, 0, 0);
+
 }
+
+
+
+
+
+
+
+
 
 
 function dot(a, b) {
@@ -67,29 +99,25 @@ function dot(a, b) {
     for (var k=0; k<3; ++k) sum += a[k] * b[k];
     return sum;
 }
-function floorColor(x, z, refrect=false) {
+function floorColor(x, z) {
     var wid = 400;
-    var alpha = 255;
     var r=0, g=0, b=0;
     if (Math.abs(Math.floor(x/wid)%2) == Math.abs(Math.floor(z/wid)%2)) b = 255;
     else r = 255;
     r /= (x*x + z*z)/10000000;
     g /= (x*x + z*z)/10000000;
     b /= (x*x + z*z)/10000000;
-    if (refrect) alpha *= 0.7;
-    return [r, g, b, alpha];
+    return [r, g, b, 255];
 }
-function ceilColor(x, z, refrect=false) {
+function ceilColor(x, z) {
     var wid = 400;
-    var alpha = 255;
     var r=0, g=0, b=0;
     if (Math.abs(Math.floor(x/wid)%2) == Math.abs(Math.floor(z/wid)%2)) r = 255, g = 255;
     else g = 255;
     r /= (x*x + z*z)/10000000;
     g /= (x*x + z*z)/10000000;
     b /= (x*x + z*z)/10000000;
-    if (refrect) alpha *= 0.7;
-    return [r, g, b, alpha];
+    return [r, g, b, 255];
 }
 function setColor(pixels, wx, i, j, color) {
     var base = (i*2*wx + j) * 4;
