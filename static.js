@@ -2,12 +2,12 @@ var canvas = document.getElementById("can1");
 var context = canvas.getContext("2d", { willReadFrequently: true });
 
 context.fillStyle = `rgb(${49}, ${176}, ${146})`;
-context.fillRect(0, 0, 640, 640);
+context.fillRect(0, 0, canvas.width, canvas.height);
 
 var wx = 320, wy = 320;
 var yFloor = 400, yCeil = -yFloor;
-var zsc = 400;
-var center = [200, 0, 1200];
+var zsc = 600;
+var center = [300, 0, 1200];
 var r = 400;
 
 var xsc, ysc;
@@ -54,19 +54,31 @@ function render() {
             norm = Math.sqrt(norm);
             // console.log(norm);
             for (var k=0; k<3; ++k) n[k] /= norm;
-            
+            // for (var k=0; k<3; ++k) n[k] *= -1;
+            if (xsc == 100 && ysc == 100) {
+                console.log("test");
+                console.log(dot(Esee, n));
+            }
+        
             var coef = -2 * dot(Esee, n);
             for (var k=0; k<3; ++k) Vdsee[k] = Esee[k] + coef * n[k];
-            if (xsc == 50 && ysc == 50) {
-                console.log(t);
-                console.log(Esee);
+            if (xsc == 100 && ysc == 100) {
+                console.log("test");
                 console.log(Vdsee);
             }
 
             var s = (yFloor-t*Esee[1]) / Vdsee[1];
-            if (s > 0) setColor(pixels, wx, i, j, floorColor(s * Vdsee[0], s * Vdsee[2]));
-            s = yCeil / Vdsee[1];
-            if (s > 0) setColor(pixels, wx, i, j, ceilColor(s * Vdsee[0], s * Vdsee[2]));
+            if (s > 0) setColor(pixels, wx, i, j, floorColor(t*Esee[0] + s*Vdsee[0], t*Esee[2] + s*Vdsee[2]));
+            s = (yCeil-t*Esee[1]) / Vdsee[1];
+            if (s > 0) setColor(pixels, wx, i, j, ceilColor(t*Esee[0] + s*Vdsee[0], t*Esee[2] + s*Vdsee[2]));
+            if (xsc == 100 && ysc == 100) {
+
+                console.log("out put");
+                console.log(c1);
+                console.log(c2);
+                console.log(t);
+                console.log(n);
+            }
         }
     }
     context.putImageData(image, 0, 0);
