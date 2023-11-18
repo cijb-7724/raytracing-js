@@ -7,7 +7,7 @@ context.fillRect(0, 0, canvas.width, canvas.height);
 var wx = 320, wy = 320;
 var yFloor = 400, yCeil = -yFloor;
 var zsc = 600;
-var center = [300, 200, 1200];
+var center = [300, 0, 1700];
 var r = 400;
 
 var xsc, ysc;
@@ -71,24 +71,40 @@ function floorColor(x, z, refrect=false) {
     var wid = 400;
     var alpha = 255;
     var r=0, g=0, b=0;
-    if (Math.abs(Math.floor(x/wid)%2) == Math.abs(Math.floor(z/wid)%2)) b = 255;
-    else r = 255;
-    r /= (x*x + z*z)/10000000;
-    g /= (x*x + z*z)/10000000;
-    b /= (x*x + z*z)/10000000;
-    if (refrect) alpha *= 0.7;
+    if (Math.abs(Math.floor(x/wid)%2) == Math.abs(Math.floor(z/wid)%2)) {
+        r=205;
+        g=171;
+        b=124;
+    }
+    else {
+        r=255;
+        g=255;
+        b=255;
+    }
+    r /= (x*x + z*z)/1000000;
+    g /= (x*x + z*z)/1000000;
+    b /= (x*x + z*z)/1000000;
+    if (refrect) alpha *= 0.8;
     return [r, g, b, alpha];
 }
 function ceilColor(x, z, refrect=false) {
     var wid = 400;
     var alpha = 255;
     var r=0, g=0, b=0;
-    if (Math.abs(Math.floor(x/wid)%2) == Math.abs(Math.floor(z/wid)%2)) r = 255, g = 255;
-    else g = 255;
-    r /= (x*x + z*z)/10000000;
-    g /= (x*x + z*z)/10000000;
-    b /= (x*x + z*z)/10000000;
-    if (refrect) alpha *= 0.7;
+    if (Math.abs(Math.floor(x/wid)%2) == Math.abs(Math.floor(z/wid)%2)) {
+        r = 160;
+        g = 160;
+        b = 234;
+    } else {
+        r = 243;
+        g = 239;
+        b = 96;
+    }
+    r /= (x*x + z*z)/1000000;
+    g /= (x*x + z*z)/1000000;
+    b /= (x*x + z*z)/1000000;
+    
+    if (refrect) alpha *= 0.8;
     return [r, g, b, alpha];
 }
 function setColor(pixels, wx, i, j, color) {
