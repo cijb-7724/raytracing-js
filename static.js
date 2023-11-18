@@ -4,7 +4,7 @@ var context = canvas.getContext("2d", { willReadFrequently: true });
 context.fillStyle = `rgb(${49}, ${176}, ${146})`;
 context.fillRect(0, 0, canvas.width, canvas.height);
 
-var wx = 320, wy = 320;
+var wx = canvas.width/2, wy = canvas.height/2;
 var yFloor = 400, yCeil = -yFloor;
 var zsc = 600;
 var center = [300, 0, 1700];
@@ -16,7 +16,7 @@ var Vsee = zeros.slice(), Esee = zeros.slice(), Vdsee = zeros.slice();
 
 render();
 function render() {
-    var image = context.getImageData(0, 0, 640, 640);
+    var image = context.getImageData(0, 0, canvas.width, canvas.height);
     var pixels = image.data;
     for (var i=0; i<2*wy; ++i) for (var j=0; j<2*wx; ++j) {
         ysc = i - wy;
@@ -84,6 +84,8 @@ function floorColor(x, z, refrect=false) {
     r /= (x*x + z*z)/1000000;
     g /= (x*x + z*z)/1000000;
     b /= (x*x + z*z)/1000000;
+
+    //-500, 2500
     if (refrect) alpha *= 0.8;
     return [r, g, b, alpha];
 }
@@ -111,3 +113,5 @@ function setColor(pixels, wx, i, j, color) {
     var base = (i*2*wx + j) * 4;
     for (var k=0; k<4; ++k) pixels[base + k] = color[k];
 }
+
+
