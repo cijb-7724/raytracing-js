@@ -1,3 +1,39 @@
-#can1 {
-    background-color: antiquewhite;
+
+.header {
+    background-color: #26d0c9;
+    color: #fff;
+    height:90px;
+    width: 100%;
+
+    float:left;
+    font-size: 42px;
+    /* padding: 20px 40px; */
+
+    display: block;
+    margin-bottom: 20px;
+    text-align: center;
 }
+body {
+    font-family: "Avenir Next";
+}
+
+
+
+
+.canvas {
+    background-color: antiquewhite;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+#canv {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+
+
+
+

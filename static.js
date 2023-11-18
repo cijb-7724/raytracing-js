@@ -1,4 +1,4 @@
-var canvas = document.getElementById("can1");
+var canvas = document.getElementById("canv");
 var context = canvas.getContext("2d", { willReadFrequently: true });
 
 context.fillStyle = `rgb(${49}, ${176}, ${146})`;
