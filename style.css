@@ -2,12 +2,12 @@
 .header {
     background-color: #26d0c9;
     color: #fff;
-    height:90px;
+    height:60px;
     width: 100%;
 
     float:left;
     font-size: 42px;
-    /* padding: 20px 40px; */
+    padding: 20px 40px;
 
     display: block;
     margin-bottom: 20px;
@@ -16,7 +16,6 @@
 body {
     font-family: "Avenir Next";
 }
-
 
 
 
@@ -34,6 +33,29 @@ body {
 }
 
 
+.setting {
+    ;
+}
+.fa-gear {
+    float: left;
+    color: rgb(194, 129, 255);
+    /* height: 80px; */
+    font-size: 60px;
+    margin: 30px 10px;
+}
 
 
+.button {
+    float: left;
+    background-color: rgb(194, 129, 255);
+    width: 170px;
+    height: 60px;
+    margin: 30px 10px;
+    /* margin-left: 20px; */
+    border-radius: 20px;
+}
 
+
+.foot {
+    clear: left;
+}
