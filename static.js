@@ -1,4 +1,10 @@
-var canvas = document.getElementById("canv");
+var canvas = document.getElementsByClassName("canv-static");
+console.log('in static js');
+console.log(canvas.length);
+if (canvas.length > 0) {
+
+
+canvas = canvas[0];
 var context = canvas.getContext("2d", { willReadFrequently: true });
 
 context.fillStyle = `rgb(${49}, ${176}, ${146})`;
@@ -115,3 +121,4 @@ function setColor(pixels, wx, i, j, color) {
 }
 
 
+}
