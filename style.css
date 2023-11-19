@@ -18,7 +18,7 @@ body {
 }
 
 
-
+/*-----------------------canvas------------------------*/
 .canvas {
     background-color: antiquewhite;
     width: 100%;
@@ -27,17 +27,22 @@ body {
 }
 
 #canv {
+    width: 640px;
+    height: 640px;
     display: block;
     margin: 0 auto;
     border: 1px solid black;
 }
 
-
-.setting {
-    ;
+/*-----------------------button------------------------*/
+.mode {
+    display: flex;
+    flex-direction: left;
+    align-items: center;
+    justify-content: center;
 }
+
 .fa-gear {
-    float: left;
     color: rgb(194, 129, 255);
     /* height: 80px; */
     font-size: 60px;
@@ -46,14 +51,58 @@ body {
 
 
 .button {
-    float: left;
     background-color: rgb(194, 129, 255);
+    color: white;
     width: 170px;
     height: 60px;
     margin: 30px 10px;
-    /* margin-left: 20px; */
     border-radius: 20px;
+
+    font-size: 30px;
+    display: block;
+    line-height: 60px;
+    text-align: center;
 }
+
+
+
+@media (max-width: 640px) {
+    .canvas {
+        width: auto;
+    }
+    .canv {
+        width: auto;
+        /* height: 100%; */
+    }
+    .mode {
+        flex-direction: column;
+    }
+    .fa-gear {
+        margin: 5px auto;
+    }
+    .button {
+        margin: 5px auto;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .foot {
