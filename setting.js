@@ -30,6 +30,15 @@ changeJsDynamic = changeJsDynamic[0];
 changeJsDynamic.addEventListener('click', function() {
     canv.classList.add('canv-dynamic');
     canv.classList.remove('canv-static');
+    
+    //test print
+    var canvas = document.getElementsByClassName("canv-static");
+    console.log('in static js');
+    console.log(canvas.length);
+
+    canvas = document.getElementsByClassName("canv-dynamic");
+    console.log('in dynamic js');
+    console.log(canvas.length);
 });
 
 var changeJsStatic = document.getElementsByClassName('static');
@@ -37,5 +46,15 @@ changeJsStatic = changeJsStatic[0];
 changeJsStatic.addEventListener('click', function() {
     canv.classList.add('canv-static');
     canv.classList.remove('canv-dynamic');
+
+    //test print
+    var canvas = document.getElementsByClassName("canv-static");
+    console.log('in static js');
+    console.log(canvas.length);
+
+    canvas = document.getElementsByClassName("canv-dynamic");
+    console.log('in dynamic js');
+    console.log(canvas.length);
 });
+
 
