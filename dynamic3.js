@@ -54,7 +54,7 @@ function draw() {
         y = yFloor - r;
     }
     if (y ==  yFloor - r && ty == 0) {
-        if (cnt % 50 == 0) {
+        if (cnt % 10 == 0) {
             tx *= 0.7;
             tz *= 0.7;
         }
