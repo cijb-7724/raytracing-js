@@ -11,23 +11,57 @@ var width = canvas.width, height = canvas.height;
 var wx = canvas.width/2, wy = canvas.height/2;
 var yFloor = 400, yCeil = -yFloor;
 var zsc = 600;
-var center = [300, 0, 1700];
-var r = 400;
+var r = 500;
 
 var xsc, ysc;
 var zeros = [0, 0, 0];
 var Vsee = zeros.slice(), Esee = zeros.slice(), Vdsee = zeros.slice();
 
+
+
+// var midC = [0, 150, 1700];
+var midC = [0, 0, 1700];
+
+var radius = 600;
+var center = [midC[0], midC[1], midC[2]+radius];
+var x, z, nx, nz, theta;
+
 var t = 10;
-t *= -1;
+var cnt = 0;
+theta = Math.PI * 2 / (t * 30);
+// t *= -1;
+var time = 0
 draw();
 function draw() {
-    setTimeout(draw, 1000/1000);
-    center[2] += t;
-    if (center[2] > 4000) t *= -1;
-    if (center[2] < 1000) t *= -1;
+    setTimeout(draw, 1000/10);
+    if ((Math.floor(cnt/300))%2 == 0) {
+        r = 500;
+        midC = [0, 0, 1700];
+        x = center[0], z = center[2];
+        x -= midC[0];
+        z -= midC[2];
+        nx = Math.cos(theta) * x - Math.sin(theta) * z;
+        nz = Math.sin(theta) * x + Math.cos(theta) * z;
+        center[0] = nx + midC[0];
+        center[2] = nz + midC[2];
+    } else {
+        r = 250;
+        midC = [0, 150, 1700];
+        x = center[0], z = center[2];
+        x -= midC[0];
+        z -= midC[2];
+        nx = Math.cos(theta) * x - Math.sin(theta) * z;
+        nz = Math.sin(theta) * x + Math.cos(theta) * z;
+        center[0] = nx + midC[0];
+        center[2] = nz + midC[2];
+    }
+    // if ()
+    
     render();
+    ++cnt;
+    if (cnt >= 600) cnt -= 600;
 }
+
 
 function render() {
     var image = context.getImageData(0, 0, width, height);
@@ -94,9 +128,11 @@ function floorColor(x, z, refrect=false) {
         g=255;
         b=255;
     }
-    r /= (x*x + z*z)/1000000;
-    g /= (x*x + z*z)/1000000;
-    b /= (x*x + z*z)/1000000;
+    var d = (x*x + z*z)/1000000
+    r = Math.min(r, r/d);
+    g = Math.min(g, g/d);
+    b = Math.min(b, b/d);
+    
 
     //-500, 2500
     if (refrect) alpha *= 0.9;
@@ -115,9 +151,11 @@ function ceilColor(x, z, refrect=false) {
         g = 239;
         b = 96;
     }
-    r /= (x*x + z*z)/1000000;
-    g /= (x*x + z*z)/1000000;
-    b /= (x*x + z*z)/1000000;
+    var d = (x*x + z*z)/1000000
+    r = Math.min(r, r/d);
+    g = Math.min(g, g/d);
+    b = Math.min(b, b/d);
+    
     
     if (refrect) alpha *= 0.9;
     return [r, g, b, alpha];
