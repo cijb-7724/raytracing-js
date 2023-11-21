@@ -29,7 +29,7 @@ var cnt = 0;
 
 draw();
 function draw() {
-    setTimeout(draw, 1000/5);
+    setTimeout(draw, 1000/10);
     
     x = center[0];
     y = center[1];
