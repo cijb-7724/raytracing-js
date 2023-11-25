@@ -18,23 +18,23 @@ var zeros = [0, 0, 0];
 var Vsee = zeros.slice(), Esee = zeros.slice(), Vdsee = zeros.slice();
 
 
+// var midC = [0, 0, 1700];
+var midC = [400, 100, 1100];
 
-// var midC = [0, 150, 1700];
-var midC = [0, 0, 1700];
 
 var radius = 600;
 var center = [midC[0], midC[1], midC[2]+radius];
 var x, z, nx, nz, theta;
 
-var t = 10;
+var t = 20;
 var cnt = 0;
-theta = Math.PI * 2 / (t * 30);
-// t *= -1;
-var time = 0
+theta = Math.PI * 2 / (t * 10);
+theta = 0;
+t = 0;
 draw();
 function draw() {
     setTimeout(draw, 1000/10);
-    if ((Math.floor(cnt/300))%2 == 0) {
+    if ((Math.floor(cnt/100))%2 == 0) {
         r = 500;
         midC = [0, 0, 1700];
         x = center[0], z = center[2];
@@ -82,7 +82,7 @@ function render() {
             t = yCeil / Esee[1];
             if (t > 0) setColor(pixels, wx, i, j, ceilColor(t * Esee[0], t * Esee[2]));
         } else {
-            //球で反射
+            // //球で反射
             var isFloor = false, isCeil = false;
             var t = c1 - Math.sqrt(c1 * c1 - c2);
             var n = zeros;
@@ -114,19 +114,66 @@ function dot(a, b) {
     for (var k=0; k<3; ++k) sum += a[k] * b[k];
     return sum;
 }
+function starIn(x, y, r) {
+    var ok = true;
+    var theta = Math.PI * 4 / 5;
+    var as = [0, 0, 0, 0, 0];
+    var bs = [0, 0, 0, 0, 0];
+    for (var k=0; k<5; ++k) {
+        xp = r * Math.cos(Math.PI / 2 + theta * k);
+        yp = r * Math.sin(Math.PI / 2 + theta * k);
+        xq = r * Math.cos(Math.PI / 2 + theta * (k+1));
+        yq = r * Math.sin(Math.PI / 2 + theta * (k+1));
+        var a = (yq - yp) / (xq - xp);
+        //yp = a xp + b
+        var b = yp - a * xp;
+        as[k] = a;
+        bs[k] = b;
+    }
+    if (y > as[0] * x + bs[0] && y > as[2] * x + bs[2]) ok = false;
+    if (y < as[3] * x + bs[3] && y > as[0] * x + bs[0]) ok = false;
+    if (y < as[1] * x + bs[1] && y < as[3] * x + bs[3]) ok = false;
+    if (y > as[4] * x + bs[4] && y < as[1] * x + bs[1]) ok = false;
+    if (y > as[2] * x + bs[2] && y > as[4] * x + bs[4]) ok = false;
+    
+    
+    return ok;
+}
 function floorColor(x, z, refrect=false) {
     var wid = 400;
     var alpha = 255;
     var r=0, g=0, b=0;
     if (Math.abs(Math.floor(x/wid)%2) == Math.abs(Math.floor(z/wid)%2)) {
-        r=205;
-        g=171;
-        b=124;
-    }
-    else {
-        r=255;
-        g=255;
-        b=255;
+        var nx = Math.abs(x) % wid;
+        var nz = Math.abs(z) % wid;
+        nx -= wid/2;
+        nz -= wid/2;
+        if (starIn(nx, nz, wid/2*0.8)) {
+            r=255;
+            g=255;
+            b=255;
+        } else {
+            r=205;
+            g=171;
+            b=124;
+        }
+    } else {
+        var nx = Math.abs(x) % wid;
+        var nz = Math.abs(z) % wid;
+        nx -= wid/2;
+        nz -= wid/2;
+        if (starIn(nx, nz, wid/2*0.8)) {
+            r=205;
+            g=171;
+            b=124;
+        } else {
+            r=255;
+            g=255;
+            b=255;
+            // r=205;
+            // g=171;
+            // b=124;
+        }
     }
     var d = (x*x + z*z)/1000000
     r = Math.min(r, r/d);
