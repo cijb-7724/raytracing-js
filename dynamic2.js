@@ -18,8 +18,8 @@ var zeros = [0, 0, 0];
 var Vsee = zeros.slice(), Esee = zeros.slice(), Vdsee = zeros.slice();
 
 
-// var midC = [0, 0, 1700];
-var midC = [400, 100, 1100];
+var midC = [0, 0, 1700];
+// var midC = [400, 100, 1100];
 
 
 var radius = 600;
@@ -29,8 +29,8 @@ var x, z, nx, nz, theta;
 var t = 20;
 var cnt = 0;
 theta = Math.PI * 2 / (t * 10);
-theta = 0;
-t = 0;
+// theta = 0;
+// t = 0;
 draw();
 function draw() {
     setTimeout(draw, 1000/10);
