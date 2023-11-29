@@ -26,15 +26,15 @@ var radius = 600;
 var center = [midC[0], midC[1], midC[2]+radius];
 var x, z, nx, nz, theta;
 
-var t = 20;
+var t = 30;
 var cnt = 0;
 theta = Math.PI * 2 / (t * 10);
 // theta = 0;
 // t = 0;
 draw();
 function draw() {
-    setTimeout(draw, 1000/10);
-    if ((Math.floor(cnt/100))%2 == 0) {
+    setTimeout(draw, 1000/30);
+    if ((Math.floor(cnt/300))%2 == 0) {
         r = 500;
         midC = [0, 0, 1700];
         x = center[0], z = center[2];
