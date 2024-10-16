@@ -26,42 +26,64 @@ var radius = 600;
 var center = [midC[0], midC[1], midC[2]+radius];
 var x, z, nx, nz, theta;
 
-var t = 30;
+var t = 20;
 var cnt = 0;
 theta = Math.PI * 2 / (t * 10);
 // theta = 0;
 // t = 0;
+
 draw();
 function draw() {
-    setTimeout(draw, 1000/30);
-    if ((Math.floor(cnt/300))%2 == 0) {
+    requestAnimationFrame(draw);
+    updateCenterPosition();
+    render();
+    ++cnt;
+    cnt %= 600;
+
+    // setTimeout(draw, 1000/30);
+    // if ((Math.floor(cnt/300))%2 == 0) {
+    //     r = 500;
+    //     midC = [0, 0, 1700];
+    //     x = center[0], z = center[2];
+    //     x -= midC[0];
+    //     z -= midC[2];
+    //     nx = Math.cos(theta) * x - Math.sin(theta) * z;
+    //     nz = Math.sin(theta) * x + Math.cos(theta) * z;
+    //     center[0] = nx + midC[0];
+    //     center[2] = nz + midC[2];
+    // } else {
+    //     r = 250;
+    //     midC = [0, 150, 1700];
+    //     x = center[0], z = center[2];
+    //     x -= midC[0];
+    //     z -= midC[2];
+    //     nx = Math.cos(theta) * x - Math.sin(theta) * z;
+    //     nz = Math.sin(theta) * x + Math.cos(theta) * z;
+    //     center[0] = nx + midC[0];
+    //     center[2] = nz + midC[2];
+    // }
+    // render();
+    // ++cnt;
+    // if (cnt >= 600) cnt -= 600;
+}
+
+function updateCenterPosition() {
+    if (Math.floor(cnt / 300) % 2 === 0) {
         r = 500;
         midC = [0, 0, 1700];
-        x = center[0], z = center[2];
-        x -= midC[0];
-        z -= midC[2];
-        nx = Math.cos(theta) * x - Math.sin(theta) * z;
-        nz = Math.sin(theta) * x + Math.cos(theta) * z;
-        center[0] = nx + midC[0];
-        center[2] = nz + midC[2];
     } else {
         r = 250;
         midC = [0, 150, 1700];
-        x = center[0], z = center[2];
-        x -= midC[0];
-        z -= midC[2];
-        nx = Math.cos(theta) * x - Math.sin(theta) * z;
-        nz = Math.sin(theta) * x + Math.cos(theta) * z;
-        center[0] = nx + midC[0];
-        center[2] = nz + midC[2];
     }
-    // if ()
-    
-    render();
-    ++cnt;
-    if (cnt >= 600) cnt -= 600;
-}
 
+    var x = center[0] - midC[0];
+    var z = center[2] - midC[2];
+    var nx = Math.cos(theta) * x - Math.sin(theta) * z;
+    var nz = Math.sin(theta) * x + Math.cos(theta) * z;
+
+    center[0] = nx + midC[0];
+    center[2] = nz + midC[2];
+}
 
 function render() {
     var image = context.getImageData(0, 0, width, height);
