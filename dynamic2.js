@@ -13,7 +13,7 @@ context.imageSmoothingEnabled = false;
 var width = canvas.width, height = canvas.height;
 var wx = canvas.width/2, wy = canvas.height/2;
 var yFloor = 400, yCeil = -yFloor;
-var zsc = 300;
+var zsc = 200;
 var r = 500;
 
 var xsc, ysc;
