@@ -7,10 +7,13 @@ var context = canvas.getContext("2d", { willReadFrequently: true });
 context.fillStyle = `rgb(${49}, ${176}, ${146})`;
 context.fillRect(0, 0, canvas.width, canvas.height);
 
+// スムージングを無効化
+context.imageSmoothingEnabled = false;
+
 var width = canvas.width, height = canvas.height;
 var wx = canvas.width/2, wy = canvas.height/2;
 var yFloor = 400, yCeil = -yFloor;
-var zsc = 600;
+var zsc = 300;
 var r = 500;
 
 var xsc, ysc;
@@ -26,7 +29,7 @@ var radius = 600;
 var center = [midC[0], midC[1], midC[2]+radius];
 var x, z, nx, nz, theta;
 
-var t = 20;
+var t = 10;
 var cnt = 0;
 theta = Math.PI * 2 / (t * 10);
 // theta = 0;
